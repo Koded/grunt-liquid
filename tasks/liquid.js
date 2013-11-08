@@ -31,6 +31,8 @@ module.exports = function(grunt) {
       var ext = path.extname(srcFiles);
       var dir = path.dirname(fp.src);
 
+      content = '{% layout layout %}' + content;
+
       var parsePromise = Liquid.Template.extParse(content, function(subFilepath, cb) {
         cb(null, grunt.file.read(path.join(options.includes, subFilepath + ext)));
       });
@@ -47,7 +49,6 @@ module.exports = function(grunt) {
           grunt.log.warn('Destination not written because compiled files were empty.');
         });
 
-        promise.fin(done);
       });
 
       parsePromise.fail(function(e) {

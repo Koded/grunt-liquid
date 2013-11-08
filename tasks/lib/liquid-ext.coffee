@@ -18,6 +18,23 @@ Liquid.Template.registerTag "block", do ->
     replace: (block) ->
       @nodelist = block.nodelist
 
+
+Liquid.Template.registerTag "layout", do ->
+  class ExtendsTag extends Liquid.Tag
+    Syntax = /([a-z0-9\/\\_-]+)/i
+    SyntaxHelp = "Syntax Error in 'extends' - Valid syntax: extends [templateName]"
+
+    constructor: (tagName, markup, tokens, template) ->
+      match = Syntax.exec(markup)
+      throw new Liquid.SyntaxError(SyntaxHelp) unless match
+
+      template.extends = 'templates/layouts/' + match[1]
+      super
+
+    render: (context) ->
+      ""
+
+
 Liquid.Template.registerTag "extends", do ->
   class ExtendsTag extends Liquid.Tag
     Syntax = /([a-z0-9\/\\_-]+)/i
@@ -41,8 +58,7 @@ Liquid.Template.registerTag "include", do ->
     constructor: (tagName, markup, tokens, template) ->
       match = Syntax.exec(markup)
       throw new Liquid.SyntaxError(SyntaxHelp) unless match
-
-      @filepath = match[1]
+      @filepath = 'templates/includes/' + match[1]
       deferred = Q.defer()
       @included = deferred.promise
 
