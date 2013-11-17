@@ -43,12 +43,14 @@ module.exports = function(grunt) {
         promise.done(function(output) {
           grunt.file.write(fp.dest, output);
           grunt.log.writeln('File "' + fp.dest + '" created.');
+
         });
 
         promise.fail(function() {
           grunt.log.warn('Destination not written because compiled files were empty.');
         });
 
+		promise.fin(done);
       });
 
       parsePromise.fail(function(e) {
