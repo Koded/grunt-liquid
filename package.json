@@ -25,7 +25,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "liquid-node": "~0.1.0",
+    "liquid-node": "0.1.2",
     "coffee": "~0.0.0",
     "grunt-lib-contrib": "~0.5.1"
   },
